@@ -1,0 +1,56 @@
+<form action="{$_layoutParams.root}{$process}" method="post">
+    <div class="mb-3">
+        <label for="rol" class="form-label">{$asunto}</label>
+        <div class="mb-4">
+            <label for="nombre" class="form-label">Nombre </label>
+            <input type="text" name="nombre" value="{$usuario.nombre|default:""}" class="form-control" id="nombre" aria-describedby="nombre">
+        </div><br>
+        <div class="mb-4">
+            <label for="email" class="form-label">Correo</label>
+            <input type="email" name="email" value="{$usuario.email|default:""}" class="form-control" id="email" aria-describedby="email">
+        </div><br>
+        {if $pagina==create}
+            <div class="mb-4">
+                <label for="passw" class="form-label">Contraseña</label>             
+                <input type="password" name="passw" value="{$usuario.passw|default:""}" class="form-control" id="passw" aria-describedby="passw">
+            </div><br>
+            <div class="mb-4">
+                <label for="passw" class="form-label">Repetir Contraseña</label>             
+                <input type="password" name="repassw" value="{$usuario.passw|default:""}" class="form-control" id="passw" aria-describedby="passw">
+            </div><br>         
+        {/if}
+        {if $pagina==edit}
+            <div class="mb-4">
+                <label for="ativo" class="form-label">Estado</label>             
+                <select name="activo" class="form-select" aria-label="Default select example" >
+            
+                {* combobox de roles *}
+                {if $usuario.activo == 1}
+                    <option value="1">Activo</option>
+                    <option value="2">Desactivar</option>
+                {else}
+                    <option value="2">Inactivo</option>
+                    <option value="1">Activar</option>
+                {/if}
+                </select>
+            </div><br>
+        {/if}
+        <div class="mb-4">
+            <label for="rol" class="form-label">Ingrese el rol</label>
+            
+            <select name="rol" class="form-select" aria-label="Default select example" 
+            {if $pagina==edit}disabled{/if}>
+            
+            {* combobox de roles *}
+            <option selected value="{$usuario.role_id|default:""}">{$usuario.role.nombre|default:"Seleccione un rol"}</option>
+            {foreach from=$roles item=$role}
+                <option value="{$role.id}">{$role.nombre}</option>
+            {/foreach}
+            </select>
+        </div><br>
+        
+    </div>
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="send" value="{$send}">
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

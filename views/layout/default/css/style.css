@@ -1,0 +1,93 @@
+html{
+    font-size: 10px;
+    
+}
+
+html body{
+    background-color: #ffffff;
+}
+
+body header{
+    padding: 4rem;
+    background-image: url(../img/fondo_header2.jpg);
+    background-size: 40% 100%;
+    text-align: left;
+    font-size: 5rem;
+}
+
+body header img{
+    margin: 2.5rem;
+    margin-bottom: 4.5rem;
+}
+
+nav{
+    margin: 2.4rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    background-color:#FFB4B4;
+    justify-content: center;
+    font-size: 2rem;
+}
+nav ul li {
+    font-size: 3rem;
+    margin-left: 10rem ;
+    margin-right: 6rem;
+    display: inline-block;
+    margin-top: 0.7rem;
+}
+nav ul li a {
+    padding: 0.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #B2A4FF;
+    font-family: 'Poppins', cursive;
+}
+
+body nav div div ul li ul li a{
+    font-size: 2rem;
+}
+
+section div  {
+    display: inline-block;
+    margin-left: 4rem;
+    margin-right: 2rem;
+    margin-top: 10rem;
+    width: 30rem;
+    width: 25rem;
+    text-align: center;
+}
+
+/* css de paguina de ventas de productos */
+.cardImg {
+    margin: 2rem;
+    border-radius: 1rem;
+    border: 0.12rem solid #000000;
+    background-color: #f5eef5b6;
+    width: 20rem;
+    height: 30rem;
+    padding: 1rem;
+    font-size: 1.6rem;
+    text-align: center;
+}
+.cardImg img{
+    margin: 0.8rem;
+    width: 16rem;
+}
+
+.cardImg p{
+    text-align: initial;
+    margin-left: 0.8rem;
+}
+
+body .container div  {
+    display: inline-block; /**/
+}
+
+
+/**/
+footer{
+    background-color: #ffdeb4;
+    margin: 5rem;
+    padding: 5rem;
+}
