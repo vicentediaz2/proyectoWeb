@@ -10,7 +10,7 @@ class productosController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->vallidateInSuperUser();
+        // $this->vallidateInSuperUser();
     }
 
     public function index()
@@ -140,7 +140,7 @@ class productosController extends Controller
         $this->_view->assign('producto', Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id));
         $this->_view->assign('role', category::select('id', 'nombre')->find($id));
         $this->_view->assign('usuario', Usuario::select('id', 'nombre')->find($id));
-        $this->_view->assign('img', Img::select('id','nombre')->where('producto_id', $id)->first());
+        $this->_view->assign('imgs', Img::select('id','nombre')->where('producto_id', $id)->first());
         $this->_view->assign('send', $this->encrypt($this->getForm()));
 
         $this->_view->render('show');         
@@ -151,9 +151,19 @@ class productosController extends Controller
 		$this->getMessages();
 
 		$this->_view->assign('producto', Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id));
-		$this->_view->assign('img', Img::select('id','nombre')->where('producto_id', $id)->first());
+		$this->_view->assign('imgs', Img::select('id','nombre')->where('producto_id', $id)->first());
 		$this->_view->render('producto');
 
 	}
+
+    public function detalleproducto($id = null)
+    {
+        $this->getMessages();
+
+        $this->_view->assign('producto', Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id));
+		$this->_view->assign('img', Img::select('id','nombre','relevancia')->where('producto_id', $id)->get());
+        $this->_view->render('detalleproducto');
+        
+    }
 
 }

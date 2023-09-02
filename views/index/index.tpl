@@ -18,19 +18,15 @@
 <div>
     <a title="Imagen1" href="#"><img src="views/index/img/imagen_6.jpg" alt="Poster 6" width="300rem"><p>Poster 6</p></a>   
 </div>
-   
 
 
 {if isset($productos) && count($productos)}
-
-    {foreach from=$productos item=producto}
-        
-
-        <div href="{$_layoutParams.root}productos/producto/{$producto.id}">
-        </div>
-
-        {include file="../productos/producto.tpl"}
-        
+    {foreach from=$productos item=$producto}
+        {foreach from=$img item=$imgs}
+            {if $imgs.producto_id == $producto.id}
+                {include file="../productos/producto.tpl"}
+            {/if}
+        {/foreach}
     {/foreach}
 {else}
     <p class="text-info">{$mensaje}</p>

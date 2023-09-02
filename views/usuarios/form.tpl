@@ -16,7 +16,7 @@
             </div><br>
             <div class="mb-4">
                 <label for="passw" class="form-label">Repetir Contraseña</label>             
-                <input type="password" name="repassw" value="{$usuario.passw|default:""}" class="form-control" id="passw" aria-describedby="passw">
+                <input type="password" name="repassw" value="{$usuario.passw|default:""}" class="form-control" id="repassw" aria-describedby="passw">
             </div><br>         
         {/if}
         {if $pagina==edit}
