@@ -25,13 +25,13 @@ nav{
     margin: 2.4rem;
     margin-left: 4rem;
     margin-right: 4rem;
+    color: #B2A4FF;
     background-color:#FFB4B4;
     justify-content: center;
     font-size: 2rem;
     font-weight: bold;
     font-family: 'Poppins', cursive;
-    text-decoration: none;
-    text-transform: none;
+    
 }
 nav a {
     color: #B2A4FF;
@@ -47,25 +47,19 @@ nav ul li {
 }
 nav ul li a {
     padding: 0.5rem;
+    text-decoration: none;
+    text-transform: none;
+    text-decoration-line: none;
 }
 
 body nav div div ul li ul li a{
     font-size: 1.4rem;
     font-weight: bold;
     font-family: 'Poppins', cursive;
-    text-decoration: none;
-    text-transform: none;
+    
 }
 
-section div  {
-    display: inline-block;
-    margin-left: 4rem;
-    margin-right: 2rem;
-    margin-top: 10rem;
-    width: 30rem;
-    width: 25rem;
-    text-align: center;
-}
+
 
 /* css de producto detalle (vista producto/detalleproducto) */
 
@@ -102,7 +96,6 @@ section div  {
     background-color: #f5eef5b6;
     width: 20rem;
     height: 30rem;
-    /* padding: 1rem; */
     font-size: 1.6rem;
     text-align: center;
     text-decoration: none;
@@ -117,6 +110,7 @@ section div  {
 }
 .producto p{
     text-align: initial;
+ 
     margin-left: 0.864rem;
     color: #000000;
 }
@@ -125,10 +119,6 @@ section div  {
     color: #000000;
     
 }
-body .container div  {
-    display: inline-block; /**/
-}
-
 
 /**/
 footer{

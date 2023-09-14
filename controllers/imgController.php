@@ -191,11 +191,6 @@ class imgController extends Controller
     }
 
 
-
-
-
-
-
     public function show($id = null)
     {
         //metodo para ver un registro espesifico
@@ -204,7 +199,6 @@ class imgController extends Controller
 
         $this->_view->assign('title','Imagenes');
         $this->_view->assign('asunto','Ver Imagenes');
-        //$this->_view->assign('process','img/store');
         $this->_view->assign('mensaje','No hay roles disponibles');
         $this->_view->assign('img', Img::select('id', 'nombre','producto_id','relevancia','created_at','updated_at')->find($id));
         $this->_view->assign('send', $this->encrypt($this->getForm()));
