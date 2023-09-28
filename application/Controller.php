@@ -55,13 +55,11 @@ class Controller
 	protected  function getMessages(){
 		if (Session::get('msg_success')) {
 			$msg_success = Session::get('msg_success');
-			$this->_view->assign('_mensaje', $msg_success);
 			Session::destroy('msg_success');
 		}
 
 		if (Session::get('msg_error')) {
 			$msg_error = Session::get('msg_error');
-			$this->_view->assign('_error', $msg_error);
 			Session::destroy('msg_error');
 		}
 	}
@@ -150,7 +148,6 @@ class Controller
 		}
 	}
 
-
 	#metodo que permite dar accesos a un rol o a un grupo de ellos
 	#usado en controladores
 	protected function validateRol($roles){
@@ -163,7 +160,7 @@ class Controller
 			}
 		}
 
-		$this->redirect('error/denied');
+		$this->redirect();
 	}
 
 	#metodo para validar que el usuario tenga el rol de Admin
@@ -210,8 +207,6 @@ class Controller
 
 		Session::resetId();
 	}
-
-
 
 	#metodo que comprueba la veracidad de un RUT
 	protected function validateRut($rut)

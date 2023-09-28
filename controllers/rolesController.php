@@ -13,11 +13,11 @@ class rolesController extends Controller
         $this->vallidateInAdmin();
         $this->getMessages();
 
-        $this->_view->assign('title','Roles');
-        $this->_view->assign('asunto','Lista de Roles');
-        $this->_view->assign('mensaje','No hay roles disponibles');
-        $this->_view->assign('roles', Role::select('id', 'nombre')->get());
-        $this->_view->render('index');
+        $title = 'Roles';
+        $asunto = 'Lista de Roles';
+        $mensaje = 'No hay roles disponibles';
+        $roles = Role::select('id', 'nombre')->get();
+        $this->_view->load('roles/index', compact('title', 'asunto', 'mensaje', 'roles'));
     }
 
     public function create()
@@ -27,12 +27,12 @@ class rolesController extends Controller
         $this->vallidateInAdmin();
         $this->getMessages();
 
-        $this->_view->assign('title','Roles');
-        $this->_view->assign('asunto','Nuevo Rol');
-        $this->_view->assign('process','roles/store');
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Roles';
+        $asunto = 'Nuevo Rol';
+        $process = 'roles/store';
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('create');
+        $this->_view->load('roles/create', compact('title', 'asunto', 'process', 'send'));
     }
 
     public function store()
@@ -66,13 +66,13 @@ class rolesController extends Controller
         Validate::validateModel(Role::class, $id, 'error/error');
         $this->getMessages();
 
-        $this->_view->assign('title','Roles');
-        $this->_view->assign('asunto','Editar Roles');
-        $this->_view->assign('roles',Role::find(Filter::filterInt($id)));
-        $this->_view->assign('process',"roles/update/{$id}");
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Roles';
+        $asunto = 'Editar Roles';
+        $roles = Role::find(Filter::filterInt($id));
+        $process = "roles/update/{$id}";
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('edit'); 
+        $this->_view->load('roles/edit', compact('title', 'asunto', 'roles', 'process', 'send')); 
     } 
 
     public function update($id = null)
@@ -102,14 +102,14 @@ class rolesController extends Controller
         $this->vallidateInAdmin();
         $this->getMessages();
 
-        $this->_view->assign('title','Roles');
-        $this->_view->assign('asunto','Ver Rol');
-        $this->_view->assign('process','roles/store');
-        $this->_view->assign('mensaje','No hay roles disponibles');
-        $this->_view->assign('role', Role::select('id', 'nombre','created_at','updated_at')->find($id));
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Roles';
+        $asunto = 'Ver Rol';
+        $process = 'roles/store';
+        $mensaje = 'No hay roles disponibles';
+        $role = Role::select('id', 'nombre','created_at','updated_at')->find($id);
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('show');         
+        $this->_view->load('roles/show', compact('title', 'asunto', 'process', 'mensaje', 'role', 'send'));         
     }
 
 }

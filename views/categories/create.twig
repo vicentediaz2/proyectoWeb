@@ -1,0 +1,19 @@
+{% extends "layout/default/template.twig" %}
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">
+            {{asunto}}
+            <a href="{{BASE}}categories" class="btn btn-outline-secondary">volver</a>
+        </h1>
+        <div class="col-md-6">
+            {% include 'partials/_messages.twig' %}
+            {% include 'categories/form.twig' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -13,11 +13,12 @@ class categoriesController extends Controller
         $this->vallidateInSuperUser();
         $this->getMessages();
 
-        $this->_view->assign('title','Categorias');
-        $this->_view->assign('asunto','Lista de Categorias');
-        $this->_view->assign('mensaje','No hay Categorias disponibles');
-        $this->_view->assign('categoria', Category::select('id', 'nombre')->get());
-        $this->_view->render('index');
+        $title = 'Categorias';
+        $asunto = 'Lista de Categorias';
+        $mensaje = 'No hay Categorias disponibles';
+        $categoria = Category::select('id', 'nombre')->get();
+        
+        $this->_view->load('categories/index',compact('title','asunto','mensaje','categoria'));
     }
 
     public function create()
@@ -27,12 +28,12 @@ class categoriesController extends Controller
         $this->vallidateInIlu();
         $this->getMessages();
 
-        $this->_view->assign('title','Categorias');
-        $this->_view->assign('asunto','Nuevo Categorias');
-        $this->_view->assign('process','categories/store');
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Categorias';
+        $asunto = 'Nuevo Categorias';
+        $process = 'categories/store';
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('create');
+        $this->_view->load('categories/create',compact('title','asunto','process','send'));
     }
 
     public function store()
@@ -57,7 +58,7 @@ class categoriesController extends Controller
         $categoria->save();
 
         Session::set('msg_success','La categoria se ha registrado correctamente');
-        $this->redirect('categories');
+        $this->redirect('categories/index');
     }
     
     public function edit($id = null)
@@ -68,13 +69,13 @@ class categoriesController extends Controller
         $this->vallidateInIlu();
         $this->getMessages();
 
-        $this->_view->assign('title','Categorias');
-        $this->_view->assign('asunto','Editar Categorias');
-        $this->_view->assign('categoria',Category::find(Filter::filterInt($id)));
-        $this->_view->assign('process',"categories/update/{$id}");        
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Categorias';
+        $asunto = 'Editar Categorias';
+        $categoria = Category::find(Filter::filterInt($id));
+        $process = "categories/update/{$id}";
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('edit'); 
+        $this->_view->load('categories/edit',compact('title','asunto','categoria','process','send')); 
     } 
 
     public function update($id = null)
@@ -106,15 +107,14 @@ class categoriesController extends Controller
 
         Validate::validateModel(Category::class, $id, 'error/error');
 
-        $this->_view->assign('title','Categorias');
-        $this->_view->assign('asunto','Ver Categorias');
-        $this->_view->assign('process','categories/store');
-        $this->_view->assign('mensaje','No hay Categorias disponibles');
-        $this->_view->assign('categoria',Category::find(Filter::filterInt($id)));
-        //$this->_view->assign('categoria', Category::select('id', 'nombre_categoria','created_at','updated_at')->find($id));
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Categorias';
+        $asunto = 'Ver Categorias';
+        $process = 'categories/store';
+        $mensaje = 'No hay Categorias disponibles';
+        $categoria = Category::find(Filter::filterInt($id));
+        $send = $this->encrypt($this->getForm());
         
-        $this->_view->render('show');         
+        $this->_view->load('categories/show',compact('title','asunto','process','mensaje','categoria','send'));         
     }
 
 }

@@ -1,0 +1,50 @@
+{% extends "layout/default/template.twig" %}
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">
+            {{asunto}} 
+            <a href="{{BASE}}img/create" class="btn btn-outline-secondary">Nueva Imagen</a>
+        </h1>
+        {% include 'partials/_messages.twig' %}
+        {% if imagenes %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Archivo</th>
+                        <th>producto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for model in imagenes %}
+                        <tr>
+                            <td>{{model.id}}</td>
+                            <td>{{model.nombre}}</td>
+                            <td>{{model.producto.nombre}}</td>
+                            <td>
+                                <a href="{{BASE}}img/show/{{model.id}}"
+                                    class="btn btn-success btn-sm">Ver</a>
+                                <a href="{{BASE}}img/edit/{{model.id}}" 
+                                    class="btn btn-warning btn-sm">Editar</a>
+                                <form action="{{BASE}}img/destroy/{{model.id}}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="send" value="{{model}}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-info">{{mensaje}}</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

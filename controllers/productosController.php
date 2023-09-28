@@ -18,11 +18,12 @@ class productosController extends Controller
         $this->vallidateInSuperUser();
         $this->getMessages();
 
-        $this->_view->assign('title','Productos');
-        $this->_view->assign('asunto','Lista de Productos');
-        $this->_view->assign('mensaje','No hay productos disponibles');
-        $this->_view->assign('productos', Producto::with('category')->orderBy('id','desc')->get());
-        $this->_view->render('index');
+        $title = 'Productos';
+        $asunto = 'Lista de Productos';
+        $mensaje = 'No hay productos disponibles';
+        $productos = Producto::with('category')->orderBy('id','desc')->get();
+
+        $this->_view->load('productos/index', compact('title', 'asunto', 'mensaje', 'productos'));
     }
 
     public function create()
@@ -32,16 +33,15 @@ class productosController extends Controller
         $this->vallidateInIlu();
         $this->getMessages();
 
-        $this->_view->assign('pagina','create');
+        $pagina = 'create';
+        $title = 'productos';
+        $asunto = 'Nuevo productos';
+        $process = 'productos/store';
+        $categorias = category::select('id', 'nombre')->get();
+        $usuarios = Usuario::select('id', 'nombre')->get();
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->assign('title','productos');
-        $this->_view->assign('asunto','Nuevo productos');
-        $this->_view->assign('process','productos/store');
-        $this->_view->assign('categorias', category::select('id', 'nombre')->get());
-        $this->_view->assign('usuarios', Usuario::select('id', 'nombre')->get());
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
-
-        $this->_view->render('create');
+        $this->_view->load('productos/create', compact('pagina', 'title', 'asunto', 'process', 'categorias', 'usuarios', 'send'));
     }
 
     public function store()
@@ -87,17 +87,15 @@ class productosController extends Controller
         $this->vallidateInIlu();
         $this->getMessages();
 
-        $this->_view->assign('pagina','edit');
+        $pagina = 'edit';
+        $title = 'productos';
+        $producto = Producto::find(Filter::filterInt($id));
+        $categorias = category::select('id', 'nombre')->get();
+        $usuario = Usuario::select('id', 'nombre')->get();
+        $process = "productos/update/{$id}";
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->assign('title','productos');
-        $this->_view->assign('asunto','Editar productos');
-        $this->_view->assign('producto',Producto::find(Filter::filterInt($id)));
-        $this->_view->assign('categorias', category::select('id', 'nombre')->get());   
-        $this->_view->assign('usuario', Usuario::select('id', 'nombre')->get());     
-        $this->_view->assign('process',"productos/update/{$id}");
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
-
-        $this->_view->render('edit'); 
+        $this->_view->load('productos/edit', compact('pagina', 'title', 'producto', 'categorias', 'usuario', 'process', 'send')); 
     } 
 
     public function update($id = null)
@@ -133,26 +131,26 @@ class productosController extends Controller
         $this->vallidateInSuperUser();
         $this->getMessages();
 
-        $this->_view->assign('title','productos');
-        $this->_view->assign('asunto','Ver productos');
-        $this->_view->assign('process','productos/store');
-        $this->_view->assign('mensaje','No hay usuarios disponibles');
-        $this->_view->assign('producto', Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id));
-        $this->_view->assign('role', category::select('id', 'nombre')->find($id));
-        $this->_view->assign('usuario', Usuario::select('id', 'nombre')->find($id));
-        $this->_view->assign('imgs', Img::select('id','nombre')->where('producto_id', $id)->first());
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'productos';
+        $asunto = 'Ver productos';
+        $process = 'productos/store';
+        $mensaje = 'No hay usuarios disponibles';
+        $producto = Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id);
+        $role = category::select('id', 'nombre')->find($id);
+        $usuario = Usuario::select('id', 'nombre')->find($id);
+        $imgs = Img::select('id','nombre')->where('producto_id', $id)->first();
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('show');         
+        $this->_view->load('productos/show', compact('title', 'asunto', 'process', 'mensaje', 'producto', 'role', 'usuario', 'imgs', 'send'));         
     }
 
     public function producto($id = null)
 	{
 		$this->getMessages();
 
-		$this->_view->assign('producto', Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id));
-		$this->_view->assign('imgs', Img::select('id','nombre')->where('producto_id', $id)->first());
-		$this->_view->render('producto');
+        $producto = Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id);
+        $img = Img::select('id','nombre')->where('producto_id', $id)->first();
+		$this->_view->load('producto', compact('producto','imgs'));
 
 	}
 
@@ -160,9 +158,9 @@ class productosController extends Controller
     {
         $this->getMessages();
 
-        $this->_view->assign('producto', Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id));
-		$this->_view->assign('img', Img::select('id','nombre','relevancia')->where('producto_id', $id)->get());
-        $this->_view->render('detalleproducto');
+        $producto = Producto::select('id', 'nombre','descripcion','usuarios_id','precio','stock','category_id','created_at','updated_at')->find($id);
+        $img = Img::select('id','nombre','relevancia')->where('producto_id', $id)->get();
+        $this->_view->load('productos/detalleproducto', compact('producto','img'));
         
     }
 

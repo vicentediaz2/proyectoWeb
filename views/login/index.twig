@@ -1,0 +1,28 @@
+{% extends "layout/default/template.twig" %}
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <div class="card col-6">
+        <div class="card-body">
+            <form action="{{BASE}}{{process}}" method="post">
+                {% include 'partials/_messages.twig' %}
+                <div class="mb-3 card">
+                <label class="form-title">{{title}}</label>
+                <label for="login" class="form-label">{{asunto}}</label>
+                    <div class="mb-4">
+                        <label for="email" class="form-label">Ingrese el correo</label>
+                        <input type="text" name="email" value="" class="form-control" id="email" aria-describedby="email">
+                    </div>
+                    <div class="mb-4">
+                        <label for="passw" class="form-label">Ingrese la contraseña</label>
+                        <input type="password" name="passw" value="" class="form-control" id="passw" aria-describedby="password">
+                    </div>
+                </div>
+                <input type="hidden" name="send" value="{{send}}">
+                <button type="submit" class="btn btn-primary">Iniciar</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout/default/template.twig" %}
+{% block title %}Bienvenidos{% endblock %}
+
+
+{% block content %}
+
+{% include 'partials/_messages.twig' %}
+
+{% if productos %}
+    {% for producto in productos %}
+        {% for img in imgs %}
+            {% if img.producto_id == producto.id %}
+                {% include 'productos/producto.twig' %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% else %}
+    <p class="text-info">{{mensaje}}</p>
+{% endif %}
+
+{% endblock %}

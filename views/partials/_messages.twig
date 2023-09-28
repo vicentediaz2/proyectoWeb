@@ -1,0 +1,11 @@
+{% block content %}
+    {% if _error %}
+        <div style="margin-top: 40px;"></div>
+        <p class="alert alert-danger">{{_error}}</p>
+    {% endif %}
+
+    {% if _mensajet %}
+        <div style="margin-top: 40px;"></div>
+        <p class="alert alert-success">{{_mensaje}}</p>
+    {% endif %}
+{% endblock %}

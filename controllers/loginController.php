@@ -12,17 +12,16 @@ class loginController extends Controller
     public function index()
     {
         $this->getMessages();
+        $title = 'Login';
+        $asunto = 'Acceso Usuario';
+        $process = 'login/store';
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->assign('title','Login');
-        $this->_view->assign('asunto','Acceso Usuario');
-        $this->_view->assign('process','login/store');
-        $this->_view->assign('send',$this->encrypt($this->getForm()));
-
-        $this->_view->render('index');
+        $this->_view->load('login/index',compact('title','asunto','process','send'));
     }
     public function store()
     {
-        $this->validateForm('login/login',[
+        $this->validateForm('login/index',[
             'email' => $this->validateEmail(Filter::getPostParam('email')),
             'passw' => Filter::getSql('passw')
         ]);
@@ -35,7 +34,7 @@ class loginController extends Controller
 
         if (!$usuario) {
             Session::set('msg_error','El correo o la contraseña no están registrados');
-            $this->redirect('login');
+            $this->redirect();
         }
 
         Session::set('autenticate', true);
@@ -46,7 +45,7 @@ class loginController extends Controller
         Session::set('time', time());
 
         Session::set('msg_success','Bienvenid@ ' . Session::get('user_nombre'));
-        $this->redirect();
+        $this->redirect('index');
     }
 
     public function logout()

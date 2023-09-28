@@ -15,11 +15,12 @@ class imgController extends Controller
         $this->getMessages();
         $this->vallidateInSuperUser();
 
-        $this->_view->assign('title','Imagenes');
-        $this->_view->assign('asunto','Lista de Imagenes');
-        $this->_view->assign('mensaje','No hay Imagenes disponibles');
-        $this->_view->assign('imagenes', img::select('id','nombre','producto_id')->get());
-        $this->_view->render('index');
+        $title = 'Imagenes';
+        $asunto = 'Lista de Imagenes';
+        $mensaje = 'No hay Imagenes disponibles';
+        $imagenes = img::select('id','nombre','producto_id')->get();
+
+        $this->_view->load('img/index', compact('title','asunto','mensaje','imagenes'));
     }
 
     public function create()
@@ -28,14 +29,14 @@ class imgController extends Controller
         $this->getMessages();
         $this->vallidateInIlu();
 
-        $this->_view->assign('title','Imagenes');
-        $this->_view->assign('asunto','Nueva Imagen');
-        $this->_view->assign('pagina','create');
-        $this->_view->assign('process','img/store');
-        $this->_view->assign('productos', Producto::select('id', 'nombre')->get());
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Imagenes';
+        $asunto = 'Nueva Imagen';
+        $pagina = 'create';
+        $process = 'img/store';
+        $productos = Producto::select('id', 'nombre')->get();
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('create');
+        $this->_view->load('img/create', compact('title','asunto','pagina','process','productos','send'));
     }
 
     public function store()
@@ -104,15 +105,15 @@ class imgController extends Controller
         Validate::validateModel(Img::class, $id, 'error/error');
         $this->getMessages();
 
-        $this->_view->assign('title','Imagenes');
-        $this->_view->assign('asunto','Editar Imagen');
-        $this->_view->assign('pagina','edit');
-        $this->_view->assign('productos', Producto::select('id', 'nombre')->get());
-        $this->_view->assign('imgs', Img::find(Filter::filterInt($id)));
-        $this->_view->assign('process',"img/update/{$id}");
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Imagenes';
+        $asunto = 'Editar Imagen';
+        $pagina = 'edit';
+        $productos = Producto::select('id', 'nombre')->get();
+        $imgs = Img::find(Filter::filterInt($id));
+        $process = "img/update/{$id}";
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('edit');
+        $this->_view->load('img/edit', compact('title','asunto','pagina','productos','imgs','process','send'));
     }
 
     public function update($id = null)
@@ -187,7 +188,7 @@ class imgController extends Controller
         $imagen->delete();
 
         Session::set('msg_success', 'La imagen se ha eliminado correctamente');
-        $this->redirect('img/');
+        $this->redirect('img');
     }
 
 
@@ -197,12 +198,12 @@ class imgController extends Controller
         $this->vallidateInSuperUser();
         $this->getMessages();
 
-        $this->_view->assign('title','Imagenes');
-        $this->_view->assign('asunto','Ver Imagenes');
-        $this->_view->assign('mensaje','No hay roles disponibles');
-        $this->_view->assign('img', Img::select('id', 'nombre','producto_id','relevancia','created_at','updated_at')->find($id));
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Imagenes';
+        $asunto = 'Ver Imagenes';
+        $mensaje = 'No hay roles disponibles';
+        $img = Img::select('id', 'nombre','producto_id','relevancia','created_at','updated_at')->find($id);
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('show');         
+        $this->_view->load('img/show', compact('title','asunto','mensaje','img','send'));         
     }
 }

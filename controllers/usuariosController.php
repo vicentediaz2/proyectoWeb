@@ -14,11 +14,13 @@ class usuariosController extends Controller
     {
         $this->vallidateInSuperUser();
         $this->getMessages();
-        $this->_view->assign('title','Usuarios');
-        $this->_view->assign('asunto','Lista de Usuarios');
-        $this->_view->assign('mensaje','No hay Usuarios disponibles');
-        $this->_view->assign('usuarios', Usuario::with('role')->orderBy('id','desc')->get());
-        $this->_view->render('index');
+
+        $title = 'Usuarios';
+        $asunto = 'Lista de Usuarios';
+        $mensaje = 'No hay Usuarios disponibles';
+        $usuarios = Usuario::with('role')->orderBy('id','desc')->get();
+
+        $this->_view->load('usuarios/index', compact('title','asunto','mensaje','usuarios'));
     }
 
     public function create()
@@ -27,15 +29,15 @@ class usuariosController extends Controller
         $this->vallidateInAdmin();
         $this->getMessages();
 
-        $this->_view->assign('pagina','create');
+        $pagina = 'create';
 
-        $this->_view->assign('title','Usuarios');
-        $this->_view->assign('asunto','Nuevo Usuarios');
-        $this->_view->assign('process','usuarios/store');
-        $this->_view->assign('roles', Role::select('id', 'nombre')->get());
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Usuarios';
+        $asunto = 'Nuevo Usuarios';
+        $process = 'usuarios/store';
+        $roles = Role::select('id', 'nombre')->get();
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('create');
+        $this->_view->load('usuarios/create', compact('pagina', 'title', 'asunto', 'process', 'roles', 'send'));
     }
 
     public function store()
@@ -82,16 +84,16 @@ class usuariosController extends Controller
         Validate::validateModel(Usuario::class, $id, 'error/error');
         $this->getMessages();
 
-        $this->_view->assign('pagina','edit');
+        $pagina = 'edit';
 
-        $this->_view->assign('title','Usuarios');
-        $this->_view->assign('asunto','Editar Usuario');
-        $this->_view->assign('usuario',Usuario::find(Filter::filterInt($id)));
-        $this->_view->assign('roles', Role::select('id', 'nombre')->get());        
-        $this->_view->assign('process',"usuarios/update/{$id}");
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Usuarios';
+        $asunto = 'Editar Usuario';
+        $usuario = Usuario::find(Filter::filterInt($id));
+        $roles = Role::select('id', 'nombre')->get();
+        $process = "usuarios/update/{$id}";
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('edit'); 
+        $this->_view->load('usuarios/edit', compact('pagina','title','asunto','usuario','roles','process','send')); 
     } 
 
     public function update($id = null)
@@ -127,15 +129,15 @@ class usuariosController extends Controller
         $this->vallidateInAdmin();
         $this->getMessages();
 
-        $this->_view->assign('title','Usuario');
-        $this->_view->assign('asunto','Ver Usuario');
-        $this->_view->assign('process','usuarios/store');
-        $this->_view->assign('mensaje','No hay usuarios disponibles');
-        $this->_view->assign('usuario', Usuario::select('id', 'nombre','email','passw','activo','role_id','created_at','updated_at')->find($id));
-        $this->_view->assign('role', Role::select('id', 'nombre')->find($id));
-        $this->_view->assign('send', $this->encrypt($this->getForm()));
+        $title = 'Usuario';
+        $asunto = 'Ver Usuario';
+        $process = 'usuarios/store';
+        $mensaje = 'No hay usuarios disponibles';
+        $usuario = Usuario::select('id', 'nombre','email','passw','activo','role_id','created_at','updated_at')->find($id);
+        $role = Role::select('id', 'nombre')->find($id);
+        $send = $this->encrypt($this->getForm());
 
-        $this->_view->render('show');         
+        $this->_view->load('usuarios/show', compact('title','asunto','process','mensaje','usuario','role','send'));         
     }
 
 
